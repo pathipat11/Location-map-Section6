@@ -20,6 +20,8 @@ export default function App() {
 
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [editPlace, setEditPlace] = useState<SavedPlace | null>(null);
+  const [editTitle, setEditTitle] = useState("");
+  const [editDesc, setEditDesc] = useState("");
 
   const [selectedCoords, setSelectedCoords] = useState<{ latitude: number; longitude: number } | null>(null);
 
@@ -51,14 +53,6 @@ export default function App() {
     );
   };
 
-  const handleMapPress = (e: any) => {
-    const coords = e.nativeEvent.coordinate;
-    setSelectedCoords(coords);
-    setNewTitle("");
-    setNewDesc("");
-    setModalVisible(true);
-  };
-
   const confirmAddPlace = () => {
     if (!selectedCoords) return;
     const newPlace: SavedPlace = {
@@ -80,6 +74,8 @@ export default function App() {
 
   const handleEditPlace = (place: SavedPlace) => {
     setEditPlace(place);
+    setEditTitle(place.title);
+    setEditDesc(place.description);
     setEditModalVisible(true);
   };
 
@@ -103,6 +99,14 @@ export default function App() {
     );
   };
 
+  const handleMapPress = (e: any) => {
+    const coords = e.nativeEvent.coordinate;
+    setSelectedCoords(coords);
+    setNewTitle("");
+    setNewDesc("");
+    setModalVisible(true);
+  };
+  
   return (
     <View style={{ flex: 1 }}>
       <MapComponent
@@ -112,7 +116,7 @@ export default function App() {
         selectedCoords={selectedCoords}
         onMapPress={handleMapPress}
         onDragEnd={(coords) => setSelectedCoords(coords)}
-        
+        onPressMarker={() => setModalVisible(true)}
       />
 
       <View style={styles.buttonsContainer}>

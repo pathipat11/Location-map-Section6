@@ -7,11 +7,12 @@ type MapComponentProps = {
     savedPlaces: SavedPlace[];
     selectedCoords?: { latitude: number; longitude: number } | null;
     onMapPress?: (e: any) => void;
-    onDragEnd?: (coords: { latitude: number; longitude: number }) => void; // สำหรับ draggable
+    onDragEnd?: (coords: { latitude: number; longitude: number }) => void;
+    onPressMarker?: () => void;
 };
 
 const MapComponent = forwardRef<MapView, MapComponentProps>(
-    ({ location, savedPlaces, selectedCoords, onMapPress, onDragEnd }, ref) => {
+    ({ location, savedPlaces, selectedCoords, onMapPress, onDragEnd, onPressMarker }, ref) => {
         return (
         <MapView
             ref={ref}
@@ -47,6 +48,7 @@ const MapComponent = forwardRef<MapView, MapComponentProps>(
                 pinColor="red"
                 draggable
                 onDragEnd={(e) => onDragEnd?.(e.nativeEvent.coordinate)}
+                onPress={onPressMarker}
             />
             )}
         </MapView>
