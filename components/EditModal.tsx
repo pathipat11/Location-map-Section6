@@ -71,7 +71,7 @@ export default function EditModal({
             />
 
             <View style={styles.modalButtons}>
-                <TouchableOpacity style={[styles.button, { flex: 1, marginRight: 5 }]} onPress={handleUpdate}>
+                <TouchableOpacity style={[styles.buttonEdit, { flex: 1, marginRight: 5 }]} onPress={handleUpdate}>
                 <Text style={styles.buttonText}>Update</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.button, { flex: 1, marginLeft: 5 }]} onPress={onCancel}>
@@ -91,5 +91,6 @@ const styles = StyleSheet.create({
     input: { borderWidth: 1, borderColor: "#ccc", padding: 8, marginVertical: 5, borderRadius: 6 },
     modalButtons: { flexDirection: "row", marginTop: 10 },
     button: { backgroundColor: "#1E90FF", padding: 10, borderRadius: 8 },
+    buttonEdit: { backgroundColor: "#f1b01aff", padding: 10, borderRadius: 8 },
     buttonText: { color: "#fff", textAlign: "center" },
 });

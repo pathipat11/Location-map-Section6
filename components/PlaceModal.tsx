@@ -54,14 +54,14 @@ export default function PlaceModal({
 
             <View style={styles.modalButtons}>
                 <TouchableOpacity
-                style={[styles.button, { flex: 1, marginRight: 5 }]}
-                onPress={onSave}
+                    style={[styles.buttonSave, { flex: 1, marginRight: 5 }]}
+                    onPress={onSave}
                 >
                 <Text style={styles.buttonText}>Save</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                style={[styles.button, { flex: 1, marginLeft: 5 }]}
-                onPress={onCancel}
+                    style={[styles.button, { flex: 1, marginLeft: 5 }]}
+                    onPress={onCancel}
                 >
                 <Text style={styles.buttonText}>Cancel</Text>
                 </TouchableOpacity>
@@ -80,5 +80,6 @@ const styles = StyleSheet.create({
     input: { borderWidth: 1, borderColor: "#ccc", padding: 8, marginVertical: 5, borderRadius: 6 },
     modalButtons: { flexDirection: "row", marginTop: 10 },
     button: { backgroundColor: "#1E90FF", padding: 10, borderRadius: 8 },
+    buttonSave: { backgroundColor: "#1ea73eff", padding: 10, borderRadius: 8 },
     buttonText: { color: "#fff", textAlign: "center" },
 });

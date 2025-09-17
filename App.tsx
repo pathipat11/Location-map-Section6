@@ -53,22 +53,41 @@ export default function App() {
 
   const confirmAddPlace = () => {
     if (!selectedCoords) return;
-    const newPlace: SavedPlace = {
-      id: Date.now().toString(),
-      latitude: selectedCoords.latitude,
-      longitude: selectedCoords.longitude,
-      title: newTitle || "Untitled",
-      description: newDesc || "",
-    };
-    const updated = [...savedPlaces, newPlace];
-    setSavedPlaces(updated);
-    savePlacesToStorage(updated);
 
-    setNewTitle("");
-    setNewDesc("");
-    setSelectedCoords(null);
-    setModalVisible(false);
+    Alert.alert(
+      "Add New Place",
+      `Do you want to add "${newTitle || "Untitled"}"?`,
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: () => {
+            const newPlace: SavedPlace = {
+              id: Date.now().toString(),
+              latitude: selectedCoords.latitude,
+              longitude: selectedCoords.longitude,
+              title: newTitle || "Untitled",
+              description: newDesc || "",
+            };
+            const updated = [...savedPlaces, newPlace];
+            setSavedPlaces(updated);
+            savePlacesToStorage(updated);
+
+            setNewTitle("");
+            setNewDesc("");
+            setSelectedCoords(null);
+            setModalVisible(false);
+
+            Alert.alert("Success", `"${newPlace.title}" has been added!`);
+          },
+        },
+      ]
+    );
   };
+
 
   const handleEditPlace = (place: SavedPlace) => {
     setEditPlace(place);
@@ -76,16 +95,50 @@ export default function App() {
   };
 
   const confirmEditPlace = (updatedPlace: SavedPlace) => {
-    const updated = savedPlaces.map((p) => (p.id === updatedPlace.id ? updatedPlace : p));
-    setSavedPlaces(updated);
-    savePlacesToStorage(updated);
-    setEditModalVisible(false);
+    Alert.alert(
+      "Update Place",
+      `Do you want to update "${updatedPlace.title}"?`,
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: () => {
+            const updated = savedPlaces.map((p) => (p.id === updatedPlace.id ? updatedPlace : p));
+            setSavedPlaces(updated);
+            savePlacesToStorage(updated);
+            setEditModalVisible(false);
+
+            Alert.alert("Success", `"${updatedPlace.title}" has been updated!`);
+          },
+        },
+      ]
+    );
   };
 
   const handleDeletePlace = (id: string) => {
-    const updated = savedPlaces.filter((p) => p.id !== id);
-    setSavedPlaces(updated);
-    savePlacesToStorage(updated);
+    const place = savedPlaces.find(p => p.id === id);
+    if (!place) return;
+
+    Alert.alert(
+      "Delete Place",
+      `Are you sure you want to delete "${place.title}"?`,
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => {
+            const updated = savedPlaces.filter((p) => p.id !== id);
+            setSavedPlaces(updated);
+            savePlacesToStorage(updated);
+            Alert.alert("Deleted", `"${place.title}" has been deleted.`);
+          },
+        },
+      ]
+    );
   };
 
   const handleFocusPlace = (place: SavedPlace) => {
@@ -116,8 +169,10 @@ export default function App() {
 
   return (
     <View style={{ flex: 1 }}>
-      <Text style={styles.Header}>My Location Map</Text>
-      <SearchBar style={styles.SearchBar} onSelect={handleSearchSelect} />
+      <View style={styles.headerCard}>
+        <Text style={styles.Header}>My Location Map</Text>
+        <SearchBar onSelect={handleSearchSelect} />
+      </View>
       <MapComponent
         ref={mapRef}
         location={location}
@@ -180,19 +235,26 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  Header: {
-    textAlign: "center",
-    paddingTop: 35,
-    paddingBottom: 10,
-    backgroundColor: "#1971c8ff",
-    color: "#fff",
-    fontSize: 28,
-    fontWeight: "bold",
-    elevation: 3,
+  headerCard: {
+    position: "absolute",
+    top: 50,
+    left: 10,
+    right: 10,
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    padding: 10,
+    elevation: 5,
     shadowColor: "#000",
     shadowOpacity: 0.2,
-    shadowRadius: 3,
+    shadowRadius: 4,
     shadowOffset: { width: 0, height: 2 },
+    zIndex: 10,
+  },
+  Header: {
+    fontSize: 22,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 8,
   },
   fab: {
     position: "absolute",
@@ -210,7 +272,6 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   fabText: { color: "#fff", fontSize: 22, fontWeight: "bold" },
-
   locationBtn: {
     position: "absolute",
     bottom: 210,
