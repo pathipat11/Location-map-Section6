@@ -18,6 +18,8 @@ const MapComponent = forwardRef<MapView, MapComponentProps>(
             ref={ref}
             style={{ flex: 1 }}
             showsUserLocation={true}
+            showsMyLocationButton={false}
+            showsCompass={false}
             initialRegion={{
             latitude: location?.latitude || 13.7563,
             longitude: location?.longitude || 100.5018,

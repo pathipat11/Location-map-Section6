@@ -15,19 +15,25 @@ export default function PlaceList({ places, onFocus, onEdit, onDelete }: PlaceLi
         <FlatList
             data={places}
             keyExtractor={(item) => item.id}
+            showsVerticalScrollIndicator={false}
+            ListEmptyComponent={
+            <Text style={styles.emptyText}>No saved places yet.</Text>
+            }
             renderItem={({ item }) => (
-            <TouchableOpacity style={styles.placeItem} onPress={() => onFocus(item)}>
-                <View style={{ flex: 1 }}>
+            <View style={styles.placeItem}>
+                <TouchableOpacity style={{ flex: 1 }} onPress={() => onFocus(item)}>
                 <Text style={styles.placeTitle}>{item.title}</Text>
-                <Text style={styles.placeDesc}>{item.description}</Text>
-                </View>
-                <TouchableOpacity style={{ marginHorizontal: 5 }} onPress={() => onEdit(item)}>
+                <Text style={styles.placeDesc} numberOfLines={1}>
+                    {item.description}
+                </Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.actionBtn} onPress={() => onEdit(item)}>
                 <Text style={styles.editText}>✏️</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => onDelete(item.id)}>
+                <TouchableOpacity style={styles.actionBtn} onPress={() => onDelete(item.id)}>
                 <Text style={styles.deleteText}>🗑️</Text>
                 </TouchableOpacity>
-            </TouchableOpacity>
+            </View>
             )}
         />
         </View>
@@ -54,6 +60,13 @@ const styles = StyleSheet.create({
     },
     placeTitle: { fontWeight: "bold", fontSize: 16 },
     placeDesc: { color: "#555", fontSize: 12 },
-    editText: { fontSize: 18, marginHorizontal: 5, color: "green" },
-    deleteText: { fontSize: 18, marginLeft: 10, color: "red" },
+    actionBtn: { paddingHorizontal: 6 },
+    editText: { fontSize: 18, color: "green" },
+    deleteText: { fontSize: 18, color: "red" },
+    emptyText: {
+        textAlign: "center",
+        color: "#999",
+        marginTop: 20,
+        fontStyle: "italic",
+    },
 });

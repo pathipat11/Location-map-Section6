@@ -1,17 +1,11 @@
 import React, { useState } from "react";
-import { View, TextInput, FlatList, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, TextInput, FlatList, Text, TouchableOpacity, StyleSheet, ViewStyle } from "react-native";
+import { ALL_THAI_PROVINCES } from "../constants/provinces";
 
 type SearchBarProps = {
     onSelect: (coords: { latitude: number; longitude: number }, name: string) => void;
+    style?: ViewStyle;
 };
-
-const DUMMY_PLACES = [
-    { name: "Bangkok, Thailand", coords: { latitude: 13.7563, longitude: 100.5018 } },
-    { name: "Chiang Mai, Thailand", coords: { latitude: 18.7883, longitude: 98.9853 } },
-    { name: "Phuket, Thailand", coords: { latitude: 7.8804, longitude: 98.3923 } },
-    { name: "Khon Kaen, Thailand", coords: { latitude: 16.4419, longitude: 102.8350 } },
-    { name: "Hat Yai, Thailand", coords: { latitude: 7.0081, longitude: 100.4759 } },
-];
 
 export default function SearchBar({ onSelect }: SearchBarProps) {
     const [query, setQuery] = useState("");
@@ -23,7 +17,7 @@ export default function SearchBar({ onSelect }: SearchBarProps) {
         setResults([]);
         return;
     }
-    const filtered = DUMMY_PLACES.filter((place) =>
+    const filtered = ALL_THAI_PROVINCES.filter((place) =>
         place.name.toLowerCase().includes(text.toLowerCase())
     );
     setResults(filtered);
