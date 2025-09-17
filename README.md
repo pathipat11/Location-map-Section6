@@ -1,7 +1,7 @@
 # 🗺️ Location-map-Section6
 
 A modern location-based application built using **React Native** and **Expo** with **TypeScript**.
-This app allows users to **view their current location on a map**, **store location history locally**, and **display saved markers** for easy navigation.
+This app allows users to **view their current location on a map**, **store location history locally**, **display saved markers**, and **manage locations with add, edit, and delete functions with confirmation alerts** for better UX.
 
 ## ✨ Features
 
@@ -9,6 +9,7 @@ This app allows users to **view their current location on a map**, **store locat
 * 🗺️ **Interactive Map**: Display maps with markers powered by `react-native-maps`
 * 📝 **Location History**: Save visited locations with `AsyncStorage`
 * 🔎 **Marker Preview**: Display stored locations as markers on the map
+* ✏️ **Add/Edit/Delete Locations**: Add new locations, edit existing ones, and delete locations with confirmation alerts
 * 📱 **Mobile Optimized** for smooth usage across devices
 
 ## 🎬 Demo Video
@@ -83,7 +84,7 @@ location-map/
 │   └── place.ts
 ├── utils/
 │   └── storage.ts
-├── App.tsx                         # Main App file
+├── App.tsx                         # Main App file with add/edit/delete & alert features
 ├── index.ts
 ├── package.json
 └── README.md
@@ -91,11 +92,11 @@ location-map/
 
 ## 🧩 Example Code
 
-Here’s a short example of how the app uses **expo-location** and **react-native-maps**:
+Here’s a short example of how the app uses **expo-location**, **react-native-maps**, and confirmation **alerts**:
 
 ```tsx
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, Alert, StyleSheet } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 
@@ -117,6 +118,17 @@ export default function App() {
       });
     })();
   }, []);
+
+  const handleAddPlace = () => {
+    Alert.alert(
+      "Add New Place",
+      "Do you want to add this location?",
+      [
+        { text: "Cancel", style: "cancel" },
+        { text: "OK", onPress: () => console.log("Place added!") },
+      ]
+    );
+  };
 
   return (
     <View style={styles.container}>
