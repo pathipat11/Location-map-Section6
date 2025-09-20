@@ -157,7 +157,6 @@ const styles = StyleSheet.create({
 
 **Pathipat Mattra**
 
-* 🌐 Facebook: [Pathipat Mattra](https://facebook.com/pathipat.mattra)
 * 💻 GitHub: [pathipat11](https://github.com/pathipat11)
 * 💼 LinkedIn: [Pathipat Mattra](https://linkedin.com/in/viixl)
 
